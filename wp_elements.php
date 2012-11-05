@@ -1,10 +1,9 @@
 <?php
 /**
- * This is an easy to use wp framework to speed the process of writting wordpress plugin and the structure layout of your plugin
- * This plugin is licensed under GPL and can be used in both personal and commercial applications.
- * it may however not be sold individually!!
+ * This is an easy to use Library Class to speed the process of writting wordpress plugin and the structure layout of your plugin
+ * This Library Class is licensed under GPL and can be used in both personal and commercial applications.
  *
- * @author uWebic
+ * @author Christophe Debruel (uWebic)
  * */
 
 if (!class_exists('WP_elements')) {
