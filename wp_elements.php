@@ -189,46 +189,6 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * function to load js files (UNFINISHED!!!)
-         *
-         * @return void
-         * */
-//        public function loadJs($name, $scripts, $pluginName) {
-//            $name = strtolower($name);
-//            $jsFolderPath = ABSPATH . 'wp-content/plugins/' . $pluginName . '/js/';
-//            $js = 'jQuery(document).ready(function($) {';
-//            if (is_array($scripts)) {
-//                foreach ($scripts as $key => $script) {
-//                    if ($key == 'link') {
-//                        try {
-//                            $js .= self::getFileContent($jsFolderPath . $script);
-//                        } catch (Exception $e) {
-//                            echo $e->getMessage();
-//                        }
-//                    } else {
-//                        $js .= $script;
-//                    }
-//                }
-//            } else {
-//                throw new exception('Scripts must be passed as an array!');
-//            }
-//            $js .= '});';
-//            //check if file exists
-//            $dynamicJsPath = $jsFolderPath . 'dynamic/' . $name . '.js';
-//            $jsFile = get_bloginfo('url') . '/wp-content/plugins/' . $pluginName . '/js/dynamic/' . $name . '.js';
-//            if (!file_exists($dynamicJsPath)) {
-//                //write js to file
-//                if (!$handle = fopen($dynamicJsPath, 'a')) {
-//                    throw new exception('Cannot read ' . $name . '.js cache file');
-//                }
-//                if (fwrite($handle, $js) === FALSE) {
-//                    throw new exception('Cannot write to file ' . $name . '.js');
-//                }
-//            }
-//            return $jsFile;
-//        }
-
-        /**
          * Response with json header
          * @param string $response 
          */
