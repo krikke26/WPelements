@@ -14,10 +14,11 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * openWrapper function
-         *
-         * @return string
-         * */
+         * openWrapper function - generates the basic admin wrap opening tags
+         * @param type $pageTitle
+         * @param type $icon
+         * @return string 
+         */
         public function openWrapper($pageTitle, $icon = 'themes') {
             $content = '<div class="wrap">
                             <div id="icon-' . $icon . '" class="icon32"><br /></div>
@@ -27,20 +28,22 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * closeWrapper function
-         *
-         * @return string
-         * */
+         * closeWrapper function - generates the basic admin wrap closing tags
+         * @return string 
+         */
         public function closeWrapper() {
             $content = '</div>';
             return $content;
         }
 
         /**
-         * function to open a form
-         *
-         * @return void
-         * */
+         * Function to generate the form open tag
+         * @param type $action
+         * @param type $method
+         * @param type $enctype
+         * @param type $id
+         * @return string 
+         */
         public function openForm($action = '', $method = 'post', $enctype = false, $id = '') {
             if ($enctype === true) {
                 $enc = 'enctype="multipart/form-data"';
@@ -52,20 +55,21 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * function to close a form
-         *
-         * @return void
-         * */
+         * Function to generate the form closing tag
+         * @return string 
+         */
         public function closeForm() {
             $content = '</form>';
             return $content;
         }
 
         /**
-         * function to open table
-         *
-         * @return void
-         * */
+         * Function to generate the open tags of a table including some classes from wordpress + icon & title
+         * @param type $title
+         * @param type $icon
+         * @param type $class
+         * @param type $columns 
+         */
         public function openTableWrapper($title, $icon = false, $class = 'options', $columns = 3) {
             if ($icon !== false):
             ?>
@@ -79,10 +83,10 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * function to open table
-         *
-         * @return void
-         * */
+         * Function to generate the closing tags of a table and a submit button if requested
+         * @param type $columns
+         * @param type $submit 
+         */
         public function closeTableWrapper($columns = 3, $submit = array('btn_name' => 'submit', 'btn_title' => 'Update Options')) {
                     ?>
                 </tbody>
@@ -95,29 +99,21 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * loadView function
-         *
-         * @return void
-         * */
+         * Function to load a given view
+         * @param string $view
+         * @param string $pluginName
+         * @param string $ext 
+         */
         public function loadView($view, $pluginName, $ext = 'php') {
-            include($_SERVER['DOCUMENT_ROOT'] . 'wp-content/plugin/' . PLUGIN_NAME . '/views/' . $view . '.' . $ext);
+            include($_SERVER['DOCUMENT_ROOT'] . 'wp-content/plugin/' . $pluginName . '/views/' . $view . '.' . $ext);
         }
 
         /**
-         * function to send an email
-         *
-         * @return void
-         * */
-        public function sendmail($to, $from, $subject, $message) {
-            $headers = 'From: ' . $from;
-            mail($to, $subject, $message, $headers);
-        }
-
-        /**
-         * a plugin to set a default value in form fields
-         *
-         * @return void
-         * */
+         * Function to set a value for a field or return the default value given. Removes away the need to add an if/else statement to check if a value exists or not
+         * @param type $value
+         * @param type $default_value
+         * @return type  
+         */
         public function set_value($value, $default_value) {
             if (isset($value) && !empty($value)) {
                 return $value;
@@ -127,19 +123,20 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * a plugin to set a default value in form fields
-         *
-         * @return void
-         * */
+         * Function that checks if a given key exist in the $_POST array and returns it
+         * @param type $name
+         * @param type $default_value
+         * @return type 
+         */
         public function set_form_value($name, $default_value) {
             return (array_key_exists($name, $_POST)) ? $_POST[$name] : (isset($default_value)) ? $default_value : '';
         }
 
         /**
-         * public to check if a checkbox is checked. If it is the attribute checked will be returned
-         *
-         * @return void
-         * */
+         * Function to check if a checkbox is checked. If it is the attribute checked will be returned
+         * @param type $value
+         * @return type 
+         */
         public function if_checked($value) {
             if ($value == 1 || $value == 'on' || $value == 'checked') {
                 return true;
@@ -149,10 +146,10 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * public to check if a radio is checked
-         *
-         * @return void
-         * */
+         * Function to check if a radio input field is checked
+         * @param type $value
+         * @return type 
+         */
         public function if_selected($value) {
             if ($value == 1 || $value == 'on' || $value == 'checked' || $value == 'selected') {
                 return true;
@@ -162,10 +159,10 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * function to create a slug for usage in an url for example
-         *
-         * @return void
-         * */
+         * Function to create a slug for usage in an url for example
+         * @param type $slug
+         * @return type 
+         */
         public function createSlug($slug) {
             if (!empty($slug)):
                 $str = strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '_', $slug), '_'));
@@ -176,10 +173,10 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * function to get file contents
-         *
-         * @return void
-         * */
+         * Function to get the contents of a file or throw an exception
+         * @param type $path
+         * @return type 
+         */
         public function getFileContent($path) {
             if (!file_exists($path)) {
                 throw new exception(__CLASS__ . '::' . __FUNCTION__ . ' - Could not get content from file!');
@@ -189,8 +186,8 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * Response with json header
-         * @param string $response 
+         * Function to respond with json header. Usefull for ajax calls
+         * @param type $response 
          */
         public function jsonResponseOutput($response) {
             header("Content-Type: application/json");
@@ -198,12 +195,11 @@ if (!class_exists('WP_elements')) {
             exit;
         }
         
-        public function crud_page($name, $submenu, $records, $count)
-        {
-            
-        }
         
-        
+        /**
+         * Function to generate an input field
+         * @return string
+         * */
         public function input_field($type = 'text', $name, $label, $params = null)
         {
             $value = (isset($params['value']))? $params['value'] : get_option($name) ;
@@ -229,6 +225,10 @@ if (!class_exists('WP_elements')) {
             return $input;
         }
         
+        /**
+         * Function to generate an textarea
+         * @return string
+         * */
         public function textarea_field($name, $label, $params = null)
         {
             $value = (isset($params['value']))? $params['value'] : '' ;
@@ -253,6 +253,10 @@ if (!class_exists('WP_elements')) {
             return $input;
         }
         
+        /**
+         * Function to generate an select dropdown
+         * @return string
+         * */
         public function select_field($options, $name, $label, $params = null)
         {
             //check if there are options
@@ -300,6 +304,10 @@ if (!class_exists('WP_elements')) {
             return $field;
         }
         
+        /**
+         * Function to minify any given string (usefull for javascript)
+         * @return string
+         * */
         public function minifyCode($code)
         {
             $code = preg_replace('/((?<!\/)\/\*[\s\S]*?\*\/|(?<!\:)\/\/(.*))/','',$code);
@@ -308,6 +316,10 @@ if (!class_exists('WP_elements')) {
             return $code;
         }
         
+        /**
+         * Function to upload a file to the media library
+         * @return string
+         * */
         public function uploadDownloadFiles($fieldName, $supported_types, $optional = false)
         {
             // Make sure the file array isn't empty  
@@ -340,6 +352,12 @@ if (!class_exists('WP_elements')) {
             }
          }
          
+         /**
+         * Function to upload an image to the media library and set it as the featured image of a post
+         * @param string Name of the upload field
+         * @param int ID of the post
+         * @return string
+         * */
         public function set_featured_image($file, $post_id){  
             require_once(ABSPATH . "wp-admin" . '/includes/image.php');  
             require_once(ABSPATH . "wp-admin" . '/includes/file.php');  
