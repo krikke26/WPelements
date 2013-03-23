@@ -99,13 +99,25 @@ if (!class_exists('WP_elements')) {
         }
 
         /**
-         * Function to load a given view
-         * @param string $view
-         * @param string $pluginName
-         * @param string $ext 
+         * Function to load a given view or if the first view does not exist load a fallback view
+         * Example: $wpelements->loadView(array('path' => 'view.php', 'original_path' => 'original_view.php',), $data);
+         * @param array $paths
+         * @param array $data
          */
-        public function loadView($view, $pluginName, $ext = 'php') {
-            include($_SERVER['DOCUMENT_ROOT'] . 'wp-content/plugin/' . $pluginName . '/views/' . $view . '.' . $ext);
+        public function loadView($paths, $data = null) {
+            if(!isset($paths['path']) && !isset($paths['original_path'])) {
+                throw new exception ('No view specified.');
+            }
+
+            if (isset($paths['path']) && file_exists($paths['path'])) {
+                include $paths['path'];
+            } else {
+                if (!empty($paths['original_path']) && file_exists($paths['original_path'])) {
+                    include $paths['original_path'];
+                } else {
+                    throw new exception ('No views could be loaded. Make sure the paths to the view files are correct.');
+                }
+            }
         }
 
         /**
