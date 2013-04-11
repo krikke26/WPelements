@@ -383,5 +383,32 @@ if (!class_exists('WP_elements')) {
             return $attachment_id;  
         } 
 
+        
+        /**
+         * Function to check if a specific folder inside uploads folder exist and create it if it doesn't
+         * @param string Name of the folder
+         * @return string/bool
+         * */
+        public function check_upload_folder($folderName)
+        {
+            try {
+                $uploadsPath = WP_CONTENT_DIR . '/uploads/';
+                $folderPath = $uploadsPath . $folderName;
+                if (!is_dir($uploadsPath)) {
+                    throw new exception('The uploads folder (inside wp-content) does not exist and therefore the Shortcode folder cannot be created!');
+                }if (!is_writable($uploadsPath)) {
+                    throw new exception('The uploads folder (inside wp-content) is not writable! Manually create a folder named "' . $folderName . '" inside the uploads folder and make it writable.');
+                }
+                if (!is_dir($folderPath)) {
+                    mkdir($folderPath);
+                }
+                return true;
+            } catch (Exception $e) {
+                 add_action('admin_notices', function() use ($e){
+                    echo "<div id='message' class='error'><p><strong>" . $e->getMessage() . "</strong></p></div>";
+                 });      
+            }
+        }
+
     }//end of class
 }
