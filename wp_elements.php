@@ -409,6 +409,49 @@ if (!class_exists('WP_elements')) {
                  });      
             }
         }
+        
+        /**
+         * This function generates a filter form for your table. 
+         * The submitted values still needs to be catched and processed in seperate code or function
+         * Values submitted: $_POST['filter_keyword'] & $_POST['search_in'] 
+         * @param type $args 
+         */
+        public function filter_options($args = array())
+        {
+            $defaults = array(
+                'parentclass' => 'filter_block',
+                'prefix_keyword_text' => 'Search for',
+                'prefix_select_text' => 'In',
+                'search_button_text' => 'Search',
+                'select_list' => array('users' => 'Users', 'user_posts' => 'User Posts')
+            );
+            //construct array with all the params and extract to variables
+            $r = wp_parse_args( $args, $defaults );
+            extract( $r );
+            try {
+                if (!is_array($select_list)) {
+                    throw new Exception('The select list must be an array! Eg: "select_list" => array(\'users\' => \'Users\', \'user_posts\' => \'User posts\')');
+                }
+                ?>
+                <div class="filter_block">
+                    <form method="post" action="">
+                        <?php echo $prefix_keyword_text; ?>: 
+                        <input type="text" name="filter_keyword" id="filter_keyword" value="<?php echo $this->set_value($_POST['filter_keyword'], ''); ?>" /> 
+                        <?php echo $prefix_select_text; ?>: 
+                        <select name="search_in" id="search_in">
+                            <?php foreach($select_list as $shortcut => $select): ?>
+                            <?php $selected = ($_POST['search_in'] == $shortcut) ? 'selected' : '' ; ?>
+                            <option <?php echo $selected; ?> value="<?php echo strtolower(str_replace(' ', '_', $shortcut)); ?>"><?php echo $select ?></option>
+                            <?php endforeach; ?> 
+                            <input type="submit" class="button-primary" name="filter_search" id="filter_search" value="<?php echo $search_button_text; ?>" />
+                        </select>
+                    </form>
+                </div>
+                <?php
+            } catch(Exception $e){
+                echo '<p>' . $e->getMessage() . '</p>';
+            }
+        }
 
     }//end of class
 }
