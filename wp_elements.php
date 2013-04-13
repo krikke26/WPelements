@@ -436,7 +436,7 @@ if (!class_exists('WP_elements')) {
                 <div class="filter_block">
                     <form method="post" action="">
                         <?php echo $prefix_keyword_text; ?>: 
-                        <input type="text" name="filter_keyword" id="filter_keyword" value="<?php echo $this->set_value($_POST['filter_keyword'], ''); ?>" /> 
+                        <input type="text" name="filter_keyword" id="filter_keyword" value="<?php echo (isset($_POST['filter_keyword']))? $_POST['filter_keyword'] : ''; ?>" /> 
                         <?php echo $prefix_select_text; ?>: 
                         <select name="search_in" id="search_in">
                             <?php foreach($select_list as $shortcut => $select): ?>
