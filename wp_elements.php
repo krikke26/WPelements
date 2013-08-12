@@ -9,6 +9,10 @@
 if (!class_exists('WP_elements')) {
     class WP_elements {
 
+        public $adminMessageType = null;
+
+        public $adminMessage = null;
+
         public function __construct() {
 
         }
@@ -404,9 +408,9 @@ if (!class_exists('WP_elements')) {
                 }
                 return true;
             } catch (Exception $e) {
-                 add_action('admin_notices', function() use ($e){
-                    echo "<div id='message' class='error'><p><strong>" . $e->getMessage() . "</strong></p></div>";
-                 });      
+                $this->adminMessageType = 'error';
+                $this->adminMessage = $e->getMessage();
+                add_action('admin_notices', array($this, 'adminMessage'));      
             }
         }
         
@@ -451,6 +455,18 @@ if (!class_exists('WP_elements')) {
             } catch(Exception $e){
                 echo '<p>' . $e->getMessage() . '</p>';
             }
+        }
+
+        public function adminMessage($type = 'update', $message = null)
+        {
+            if ($message == null && $adminMessageType != null && $adminMessage != null) {
+                $type = $this->adminMessageType;
+                $message = $this->adminMessage;
+            }
+            echo "<div id='message' class='" . $type . "'><p><strong>" . $message . "</strong></p></div>";
+            //reset
+            $this->adminMessageType = null;
+            $this->adminMessage = null;
         }
 
     }//end of class
