@@ -358,7 +358,7 @@ if (!class_exists('WP_elements')) {
                     } // end if/else  
 
                 } else {  
-                    throw new exception("wrong file type.");  
+                    throw new exception('wrong file type for ' . $fieldName . '.');
                 } // end if/else  
             } else {
                 if (!$optional) {
