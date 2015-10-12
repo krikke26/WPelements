@@ -3,6 +3,9 @@ WPelements
 
 An easy to use Library Class to speed the process of writting wordpress plugin and the structure layout of your plugin.
 
+## Install
+
+	composer require krike/wp-elements
 
 ## Usage
 
