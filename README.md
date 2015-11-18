@@ -17,10 +17,9 @@ OR
 
 	WP_elements::set_featured_image($file, $post_id)
 
-#### openWrapper()
-
-	WP_elements::openWrapper('Page title', 'themes'); //second parameter is the icon, it is optional
-
+| Function | Description
+| openWrapper() | Opens a wrapper box for the admin page. (requires closeWrapper() at the end of your code) |
+| WP_elements::openWrapper('Page title', 'themes'); //second parameter is the icon, it is optional |
 
 #### closeWrapper()
 
